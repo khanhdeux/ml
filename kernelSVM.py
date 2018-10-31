@@ -29,7 +29,7 @@ plot_decision_regions(X_xor, y_xor, classifier=svm)
 plt.legend(loc='upper left')
 plt.show()
 
-X_train, X_train_std, X_combined_std, X_test, y_train, y_combined, y_test = get_iris_data()
+X_train, X_train_std, X_combined, X_combined_std, X_test, y_train, y_combined, y_test = get_iris_data()
 svm = SVC(kernel='rbf', random_state=1, gamma=0.2, C=1.0)
 svm.fit(X_train_std, y_train)
 plot_decision_regions(X_combined_std, y_combined, classifier=svm,test_idx=range(105, 150))

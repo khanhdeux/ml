@@ -24,10 +24,11 @@ def get_iris_data():
     X_train_std = sc.transform(X_train)
     X_test_std = sc.transform(X_test)    
     
+    X_combined = np.vstack((X_train, X_test))
     X_combined_std = np.vstack((X_train_std, X_test_std))
     y_combined = np.hstack((y_train, y_test))  
     
-    return X_train, X_train_std, X_combined_std, X_test, y_train, y_combined, y_test   
+    return X_train, X_train_std, X_combined, X_combined_std, X_test, y_train, y_combined, y_test   
 
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
     # setup marker generator and color map
