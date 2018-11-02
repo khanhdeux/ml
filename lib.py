@@ -5,12 +5,14 @@ Created on Tue Oct 30 12:04:40 2018
 
 @author: khanhdeux
 """
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 
 def get_iris_data():
     iris = datasets.load_iris()
@@ -29,6 +31,40 @@ def get_iris_data():
     y_combined = np.hstack((y_train, y_test))  
     
     return X_train, X_train_std, X_combined, X_combined_std, X_test, y_train, y_combined, y_test   
+
+def get_wine_data():
+    df_wine = pd.read_csv('wine.data.txt', header=None)
+    df_wine.columns = ['Class label', 
+                       'Alcohol',
+                       'Malic acid', 
+                       'Ash',
+                       'Alcalinity of ash', 
+                       'Magnesium',
+                       'Total phenols', 
+                       'Flavanoids',
+                       'Nonflavanoid phenols',
+                       'Proanthocyanins',
+                       'Color intensity', 
+                       'Hue',
+                       'OD280/OD315 of diluted wines',
+                       'Proline']    
+    # print(df_wine.head())
+    # print('Class labels', np.unique(df_wine['Class label']))
+    X, y = df_wine.iloc[:, 1:].values, df_wine.iloc[:, 0].values 
+    X_train, X_test, y_train, y_test = train_test_split(X, 
+                                                        y, 
+                                                        test_size=0.3, 
+                                                        random_state=0, 
+                                                        stratify=y)
+    mms = MinMaxScaler()
+    X_train_norm = mms.fit_transform(X_train)
+    X_test_norm = mms.transform(X_test)
+    
+    stdsc = StandardScaler()
+    X_train_std = stdsc.fit_transform(X_train)
+    X_test_std = stdsc.transform(X_test)
+    
+    return X_train, X_train_norm, X_train_std, X_test, X_test_norm, X_test_std, y_train, y_test
 
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
     # setup marker generator and color map
