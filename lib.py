@@ -66,6 +66,15 @@ def get_wine_data():
     
     return X_train, X_train_norm, X_train_std, X_test, X_test_norm, X_test_std, y_train, y_test
 
+def get_dummy_data():
+    X = np.array([[1,2,3],
+                  [4,5,6],
+                  [7,8,9],
+                  [10,11,12]
+                  ])
+    y = np.array([3,2,1,3])
+    return X, y
+
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
     # setup marker generator and color map
     markers = ('s', 'x', 'o', '^', 'v')
