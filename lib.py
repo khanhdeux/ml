@@ -13,6 +13,7 @@ from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import LabelEncoder
 
 def get_iris_data():
     iris = datasets.load_iris()
@@ -65,6 +66,25 @@ def get_wine_data():
     X_test_std = stdsc.transform(X_test)
     
     return X_train, X_train_norm, X_train_std, X_test, X_test_norm, X_test_std, y_train, y_test
+
+def get_breast_cancer_data():
+    df = pd.read_csv('breast_cancer.data.txt', header=None)
+    X = df.loc[:, 2:].values
+    y = df.loc[:, 1].values
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+    print(le.classes_)
+    print(le.transform(['M','B']))
+    
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, 
+                                                        y, 
+                                                        test_size=0.20,
+                                                        stratify=y,
+                                                        random_state=1
+                                                        )
+    
+    return X_train, X_test, y_train, y_test
 
 def get_dummy_data():
     X = np.array([[1,2,3],
