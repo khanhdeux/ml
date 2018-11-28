@@ -86,6 +86,21 @@ def get_breast_cancer_data():
     
     return X_train, X_test, y_train, y_test
 
+def get_iris_data_extended():
+    iris = datasets.load_iris()
+    X, y = iris.data[50:, [1, 2]], iris.target[50:]
+    le = LabelEncoder()
+    y = le.fit_transform(y)
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, 
+                                                        y, 
+                                                        test_size=0.5,
+                                                        stratify=y,
+                                                        random_state=1
+                                                        )    
+    return X_train, X_test, y_train, y_test 
+    
+
 def get_dummy_data():
     X = np.array([[1,2,3],
                   [4,5,6],
